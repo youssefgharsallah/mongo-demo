@@ -4,7 +4,7 @@ package com.gte3.mongodemo;
 import java.util.List;
 
 public interface StudentService {
-//ssz
+//ss
     List<Student> getAll();
     Student getByEmail(String email);
     String deleteByEmail(String email);
