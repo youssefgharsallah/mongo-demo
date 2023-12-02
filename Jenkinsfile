@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    triggers {
+    triggers {//
             pollSCM('*/1 * * * *')
         }
     tools {
