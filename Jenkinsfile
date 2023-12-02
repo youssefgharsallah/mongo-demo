@@ -1,26 +1,22 @@
 pipeline {
-    agent any
+   agent any
+
+       tools {
+           maven 'Maven-3-9-2'
+       }
 
     stages {
         stage('Build and Run') {
             steps {
                 script {
-
-                    sh 'docker build -t alidaoud/mongo-demo /home/jenkins/proj'
+                    git 'https://github.com/alidaoud7/mongo-demo.git'
+                    sh 'mvn clean package -DskipTests'
+                    // sh 'docker build -t alidaoud/mongo-demo /home/jenkins/proj'
+                   sh 'docker build -t app .'
                 }
             }
         }
 
-        stage('Push image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    // Log in to Docker Hub
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
 
-                    // Push the Docker image to Docker Hub
-                    sh 'docker push alidaoud/mongo-demo:latest'
-                }
-            }
-        }
     }
 }
