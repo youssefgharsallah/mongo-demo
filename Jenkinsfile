@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
 
-                    sh 'docker build -t alidaoud/mongo-demo -f /home/jenkins/proj/Dockerfile /home/jenkins/proj'
+                    sh 'docker build -t alidaoud/mongo-demo /home/jenkins/proj'
                 }
             }
         }
