@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    //triggers {//
-      //      pollSCM('*/1 * * * *')
-        //}
     tools {
         maven 'Maven-3-9-6'
     }
@@ -22,6 +19,16 @@ pipeline {
                 script {
                     sh 'mvn clean package -DskipTests'
                     sh 'docker build -t alidaoud/mongo-demo .'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQubeServer') {
+                        sh 'mvn sonar:sonar'
+                    }
                 }
             }
         }
