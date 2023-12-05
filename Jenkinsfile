@@ -17,6 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    sh 'mvn test'
                     sh 'mvn clean package -DskipTests'
                     sh 'docker build -t alidaoud/mongo-demo .'
                 }
