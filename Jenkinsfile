@@ -42,5 +42,12 @@ pipeline {
                 }
             }
         }
+
+         stage('Deploy') {
+                    steps {
+                        sh 'kubectl apply -r k8s'
+                        }
+                    }
+                }
     } // Stages
 } // Pipeline
