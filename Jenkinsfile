@@ -45,8 +45,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
+            withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+
                 sh 'kubectl apply -f k8s'
-                // Check or perform additional steps if needed
             }
         }
     } // Stages
