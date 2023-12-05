@@ -7,8 +7,8 @@ spec:
     app: mongo-demo-app-service
   ports:
     - protocol: TCP
-      port: 9090
-      targetPort: 9090
+      port: 8080
+      nodePort: 30081
   type: NodePort
 ---
 apiVersion: apps/v1
@@ -29,6 +29,8 @@ spec:
         - name: mongo-demo-app-service
           image: alidaoud/mongo-demo:latest
           imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
           env:
             - name: MONGO_DB
               valueFrom:
