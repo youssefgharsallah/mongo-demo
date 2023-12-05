@@ -43,12 +43,11 @@ pipeline {
             }
         }
 
-         stage('Deploy') {
-                    steps {
-                        sh 'kubectl apply -r k8s'
-                        //check
-                        }
-                    }
-                }
+        stage('Deploy') {
+            steps {
+                sh 'kubectl apply -f k8s'
+                // Check or perform additional steps if needed
+            }
+        }
     } // Stages
 } // Pipeline
