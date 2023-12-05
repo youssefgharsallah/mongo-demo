@@ -15,6 +15,7 @@ spec:
       containers:
         - name: mongo-demo
           image: alidaoud/mongo-demo:latest
+          imagePullPolicy: Never
           env:
             - name: SPRING_DATASOURCE_URL
               value: mongodb://mongo-demo-mongodb:27017/gte3
