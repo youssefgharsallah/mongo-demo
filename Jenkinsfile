@@ -45,6 +45,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                sh 'kubectl delete -f k8s/'
                 withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
 
