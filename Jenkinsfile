@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Pull image for deployment') {
                     steps {
-                    sh 'eval $(minikube docker-env)'
+
                     withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                             sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                             sh 'docker pull alidaoud/mongo-demo:latest'
@@ -54,7 +54,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-            sh 'docker images'
+                sh 'minikube cache add alidaoud/mongo-demo:latest'
+                sh 'minikube cache reload'
                 sh 'kubectl delete -f k8s/mongo-demo-deployment.yaml'
                 sh 'kubectl apply -f k8s'
 
