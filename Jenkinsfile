@@ -53,7 +53,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'kubectl delete -f k8s/mongo-demo-deployment'
+                sh 'kubectl delete -f k8s/mongo-demo-deployment.yaml'
 
                 sh 'kubectl apply -f k8s'
 
