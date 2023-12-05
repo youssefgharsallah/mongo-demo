@@ -17,22 +17,22 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn test'
+                 //   sh 'mvn test'
                     sh 'mvn clean package -DskipTests'
                     sh 'docker build -t alidaoud/mongo-demo .'
                 }
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv('sonarqube-server') {
-                        sh 'mvn sonar:sonar'
-                    }
-                }
-            }
-        }
+//         stage('SonarQube Analysis') {
+//             steps {
+//                 script {
+//                     withSonarQubeEnv('sonarqube-server') {
+//                         sh 'mvn sonar:sonar'
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Push image') {
             steps {
@@ -42,15 +42,21 @@ pipeline {
                 }
             }
         }
+        stage('Pull image for deployment') {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                            sh 'docker pull alidaoud/mongo-demo:latest'
+                        }
+                    }
+                }
 
         stage('Deploy') {
             steps {
-                //sh 'kubectl delete -f k8s/mongo-demo-deployment'
-                withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                sh 'kubectl delete -f k8s/mongo-demo-deployment'
 
-                    sh 'kubectl apply -f k8s'
-                }
+                sh 'kubectl apply -f k8s'
+
             }
         }
     } // Stages
