@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-demo-db-config
+data:
+  host: mongo-demo-db-service
+  database: gte3

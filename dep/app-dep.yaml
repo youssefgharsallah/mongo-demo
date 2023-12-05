@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo-demo-app-service
+spec:
+  selector:
+    app: mongo-demo-app-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30081
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-demo-app-service
+spec:
+  selector:
+    matchLabels:
+      app: mongo-demo-app-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-demo-app-service
+    spec:
+      containers:
+        - name: mongo-demo-app-service
+          image: alidaoud/mongo-demo:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-demo-db-config
+                  key: database
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-demo-db-config
+                  key: host
