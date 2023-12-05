@@ -56,7 +56,9 @@ pipeline {
             steps {
                 sh 'minikube cache add alidaoud/mongo-demo:latest'
                 sh 'minikube cache reload'
-                //sh 'kubectl delete -f dep/app-dep.yaml'
+                sh 'kubectl delete -f dep/app-dep.yaml'
+                sh 'kubectl delete -f dep/app-dep.yaml'
+                sh 'kubectl delete -f dep/mongo-demo-db-config.yaml'
                 sh 'kubectl apply -f dep/mongo-demo-db-config.yaml'
                 sh 'kubectl apply -f dep/db-dep.yaml'
                 sh 'kubectl apply -f dep/app-dep.yaml'
