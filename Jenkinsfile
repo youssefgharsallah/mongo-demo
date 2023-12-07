@@ -4,11 +4,12 @@ pipeline {
     tools {
         maven 'Maven-3-9-6'
     }
-// hhhh
-    stage ("checkout"){
-        echo "hello"
+
+    stages {
+        stage("checkout") {
+            steps {
+                echo "hello"
+            }
+        }
     }
-   
-        
-    } // Stages
-} // Pipeline
+}
