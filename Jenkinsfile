@@ -6,42 +6,42 @@ pipeline {
     }
 
     stages {
-//         stage('Checkout') {
-//             steps {
-//                 script {
-//                     git 'https://github.com/alidaoud7/mongo-demo.git'
-//                 }
-//             }
-//         }
+        stage('Checkout') {
+            steps {
+                script {
+                    git 'https://github.com/alidaoud7/mongo-demo.git'
+                }
+            }
+        }
 
-//         stage('Build') {
-//             steps {
-//                 script {
-//                  //   sh 'mvn test'
-//                     sh 'mvn clean package -DskipTests'
-//                     sh 'docker build -t alidaoud/mongo-demo .'
-//                 }
-//             }
-//         }
+        stage('Build') {
+            steps {
+                script {
+                 //   sh 'mvn test'
+                    sh 'mvn clean package -DskipTests'
+                    sh 'docker build -t alidaoud/mongo-demo .'
+                }
+            }
+        }
 
-//         stage('SonarQube Analysis') {
-//             steps {
-//                 script {
-//                     withSonarQubeEnv('sonarqube-server') {
-//                         sh 'mvn sonar:sonar'
-//                     }
-//                 }
-//             }
-//         }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('sonarqube-server') {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
 
-//         stage('Push image') {
-//             steps {
-//                 withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-//                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-//                     sh 'docker push alidaoud/mongo-demo:latest'
-//                 }
-//             }
-//         }
+        stage('Push image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'alidaoud-dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh 'docker push alidaoud/mongo-demo:latest'
+                }
+            }
+        }
         stage('Pull image for deployment') {
                     steps {
 
@@ -62,7 +62,6 @@ pipeline {
                 sh 'kubectl apply -f dep/mongo-demo-db-config.yaml'
                 sh 'kubectl apply -f dep/db-dep.yaml'
                 sh 'kubectl apply -f dep/app-dep.yaml'
-
             }
         }
     } // Stages
