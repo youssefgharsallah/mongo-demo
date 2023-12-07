@@ -33,7 +33,7 @@ pipeline {
         }
          stage('Push image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', password variable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                     sh 'docker push youssefbushman/mongo-demo:latest'
                 }
