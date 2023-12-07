@@ -59,10 +59,10 @@ pipeline {
 //                 sh 'kubectl delete -f dep/app-dep.yaml'
 //                 sh 'kubectl delete -f dep/app-dep.yaml'
 //                 sh 'kubectl delete -f dep/mongo-demo-db-config.yaml'
-                sh 'kubectl apply -f dep/mongodb-deployment.yaml'
-                sh 'kubectl apply -f dep/mongodb-service.yaml'
-                sh 'kubectl apply -f dep/springboot-app-deployment.yaml'
-                sh 'kubectl apply -f dep/springboot-app-service.yaml'
+                sh 'kubectl apply -f k8s/mongodb-deployment.yaml'
+                sh 'kubectl apply -f k8s/mongodb-service.yaml'
+                sh 'kubectl apply -f k8s/springboot-app-deployment.yaml'
+                sh 'kubectl apply -f k8s/springboot-app-service.yaml'
             }
         }
     } // Stages
