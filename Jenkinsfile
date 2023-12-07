@@ -9,7 +9,7 @@ pipeline {
         stage("checkout") {
             steps {
                  script {
-                    git 'https://github.com/alidaoud7/mongo-demo.git'
+                    git 'https://github.com/youssefgharsallah/mongo-demo.git'
                 }
             }
         }
