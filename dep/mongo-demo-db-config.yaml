@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: mongo-demo-db-config
 data:
-  host: mongo-demo-db-service
-  database: gte3
+  host: ${MONGO_DB_SERVICE:mongo-demo-db-service}
+  database: ${MONGO_DB_DATABASE:gte3}
