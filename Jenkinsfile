@@ -8,7 +8,9 @@ pipeline {
     stages {
         stage("checkout") {
             steps {
-                echo "hello"
+                 script {
+                    git 'https://github.com/alidaoud7/mongo-demo.git'
+                }
             }
         }
     }
