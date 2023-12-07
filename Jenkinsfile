@@ -6,32 +6,32 @@ pipeline {
     }
 //j
     stages {
-        stage("checkout") {
-            steps {
-                 script {
-                    git 'https://github.com/youssefgharsallah/mongo-demo.git'
-                }
-            }
-        }
-         stage('SonarQube') {
-            steps {
-                script {
-                    withSonarQubeEnv('server-sonar') {
-                        sh 'mvn sonar:sonar'
-                    }
-                }
-            }
-        }
-         stage('Test and Build') {
-            steps {
-                script {
-                    sh 'mvn test'
-                    sh 'mvn clean package -DskipTests'
-                    sh 'docker build -t youssefbushman/mongo-demo .'
-                }
-            }
-        }
-         stage('Push image') {
+        // stage("checkout") {
+        //     steps {
+        //          script {
+        //             git 'https://github.com/youssefgharsallah/mongo-demo.git'
+        //         }
+        //     }
+        // }
+        //  stage('SonarQube') {
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv('server-sonar') {
+        //                 sh 'mvn sonar:sonar'
+        //             }
+        //         }
+        //     }
+        // }
+        //  stage('Test and Build') {
+        //     steps {
+        //         script {
+        //             sh 'mvn test'
+        //             sh 'mvn clean package -DskipTests'
+        //             sh 'docker build -t youssefbushman/mongo-demo .'
+        //         }
+        //     }
+        // }
+         stage('Push image to Dockerhub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
@@ -39,5 +39,14 @@ pipeline {
                 }
             }
         }
+           stage('Pull image from dockerhub') {
+                    steps {
+
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                            sh 'docker pull youssefbushman/mongo-demo:latest'
+                        }
+                    }
+                }
     }
 }
