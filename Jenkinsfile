@@ -48,5 +48,14 @@ pipeline {
                         }
                     }
                 }
+         stage('Deploy') {
+            steps {
+                sh 'minikube cache add youssefbushman/mongo-demo:latest'
+                sh 'minikube cache reload'
+                sh 'kubectl apply -f dep/db-dep.yaml'
+                sh 'kubectl apply -f dep/app-dep.yaml'
+                sh 'kubectl apply -f dep/mongo-demo-db-config.yaml'
+            }
+        }
     }
 }
