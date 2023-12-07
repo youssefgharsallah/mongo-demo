@@ -13,7 +13,16 @@ pipeline {
                 }
             }
         }
-         stage('Build') {
+         stage('SonarQube') {
+            steps {
+                script {
+                    withSonarQubeEnv('server-sonar') {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+         stage('Test and Build') {
             steps {
                 script {
                     sh 'mvn test'
