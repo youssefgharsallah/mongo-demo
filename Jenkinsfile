@@ -4,7 +4,7 @@ pipeline {
     tools {
         maven 'Maven3.9.6'
     }
-
+//hh
     stages {
         stage("checkout") {
             steps {
